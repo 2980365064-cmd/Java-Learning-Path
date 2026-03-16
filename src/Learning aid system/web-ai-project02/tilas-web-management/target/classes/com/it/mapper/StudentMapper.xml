@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    <mapper namespace="com.it.mapper.StudentMapper">
+    <insert id="add">
+     insert into tlias.student(name,no,gender,phone,id_card,is_college,address,degree,graduation_date,clazz_id,violation_count,violation_score,create_time,update_time)
+     values(#{name},#{no},#{gender},#{phone},#{idCard},#{isCollege},#{address},#{degree},#{graduationDate},#{clazzId},#{violationCount},#{violationScore},#{createTime},#{updateTime})
+    </insert>
+    <update id="update">
+            update student
+            set name = #{name},
+            no = #{no},
+            gender = #{gender},
+            phone = #{phone},
+            id_card = #{idCard},
+            is_college = #{isCollege},
+            address = #{address},
+            degree = #{degree},
+            graduation_date = #{graduationDate},
+            clazz_id = #{clazzId},
+            violation_count = #{violationCount},
+            violation_score = #{violationScore},
+            update_time = #{updateTime}
+            where id = #{id}
+    </update>
+    <update id="updateViolation">
+            update student
+            set
+            violation_score = #{score}
+            where id = #{id}
+    </update>
+    <delete id="delete">
+
+      delete from tlias.student where id = #{id}
+    </delete>
+
+    <select id="page" resultType="com.it.pojo.Student">
+       select s.*, c.name as clazzName
+       from tlias.student s
+       left join tlias.clazz c on s.clazz_id = c.id
+       <where>
+       <if test="name != null and name != ''">
+           and s.name like concat('%', #{name}, '%')
+       </if>
+           <if test="degree != null and degree != ''">
+               and s.gender = #{degree}
+           </if>
+           <if test="clazzId != null">
+               and s.clazz_id = #{clazzId}
+           </if>
+       </where>
+    </select>
+    <select id="findStudentById" resultType="com.it.pojo.Student">
+            select * from tlias.student where id = #{id}
+    </select>
+</mapper>

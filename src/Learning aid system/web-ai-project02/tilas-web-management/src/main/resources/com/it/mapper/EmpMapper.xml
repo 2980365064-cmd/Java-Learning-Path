@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.it.mapper.EmpMapper">
+    <update id="updateById">
+        update emp
+        <set>
+            <if test="username!=null">username=#{username},</if>
+            <if test="password!=null">password=#{password},</if>
+            <if test="name!=null">name=#{name},</if>
+            <if test="gender!=null">gender=#{gender},</if>
+            <if test="phone!=null">phone=#{phone},</if>
+            <if test="job!=null">job=#{job},</if>
+            <if test="salary!=null">salary=#{salary},</if>
+            <if test="image!=null">image=#{image},</if>
+            <if test="entryDate!=null">entry_date=#{entryDate},</if>
+            <if test="deptId!=null">dept_id=#{deptId},</if>
+        </set>
+        where id=#{id}
+    </update>
+    <delete id="delete1">
+        delete from emp where id in
+        <foreach collection="array" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <resultMap id="EmpWithExprResultMap" type="com.it.pojo.Emp">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="name" column="name"/>
+        <result property="gender" column="gender"/>
+        <result property="phone" column="phone"/>
+        <result property="job" column="job"/>
+        <result property="salary" column="salary"/>
+        <result property="image" column="image"/>
+        <result property="entryDate" column="entry_date"/>
+        <result property="deptId" column="dept_id"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="deptName" column="dept_name"/>
+        <collection property="exprList" ofType="com.it.pojo.EmpExpr">
+            <id property="id" column="emp_expr_id"/>
+            <result property="empId" column="emp_id"/>
+            <result property="begin" column="begin"/>
+            <result property="end" column="end"/>
+            <result property="company" column="company"/>
+            <result property="job" column="emp_expr_job"/>
+        </collection>
+    </resultMap>
+
+    <select id="list" resultType="com.it.pojo.Emp">
+        select * from emp e left join dept d on e.dept_id = d.id
+        <where>
+            <if test="gender!=null"> e.gender=#{gender} </if>
+            <if test="name!=null">and e.name like concat('%',#{name},'%')</if>
+            <if test="begin !=null and end !=null"> and e.entry_date between #{begin} and #{end} </if>
+        </where>
+        order by e.entry_date desc
+    </select>
+
+    <select id="findById" resultMap="EmpWithExprResultMap">
+        select e.id,
+               e.username,
+               e.password,
+               e.name,
+               e.gender,
+               e.phone,
+               e.job,
+               e.salary,
+               e.image,
+               e.entry_date,
+               e.dept_id,
+               e.create_time,
+               e.update_time,
+               d.name as dept_name,
+               ee.id as emp_expr_id,
+               ee.emp_id,
+               ee.begin,
+               ee.end,
+               ee.company,
+               ee.job as emp_expr_job
+        from emp e
+        left join emp_expr ee on e.id = ee.emp_id
+        left join dept d on e.dept_id = d.id
+        where e.id=#{id}
+    </select>
+</mapper>

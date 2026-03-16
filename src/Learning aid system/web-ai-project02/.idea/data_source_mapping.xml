@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourcePerFileMappings">
+    <file url="file://$PROJECT_DIR$/tilas-web-management/src/main/java/com/it/mapper/ClazzMapper.java" value="36d3e41e-4a22-43bd-aacd-0546f0a769e8" />
+    <file url="file://$PROJECT_DIR$/tilas-web-management/src/main/java/com/it/mapper/DeptMapper.java" value="36d3e41e-4a22-43bd-aacd-0546f0a769e8" />
+    <file url="file://$PROJECT_DIR$/tilas-web-management/src/main/java/com/it/mapper/EmpExprMapper.java" value="36d3e41e-4a22-43bd-aacd-0546f0a769e8" />
+    <file url="file://$PROJECT_DIR$/tilas-web-management/src/main/java/com/it/mapper/EmpMapper.java" value="36d3e41e-4a22-43bd-aacd-0546f0a769e8" />
+    <file url="file://$PROJECT_DIR$/tilas-web-management/src/main/resources/com/it/mapper/ClazzMapper.xml" value="36d3e41e-4a22-43bd-aacd-0546f0a769e8" />
+    <file url="file://$PROJECT_DIR$/tilas-web-management/src/main/resources/com/it/mapper/EmpMapper.xml" value="36d3e41e-4a22-43bd-aacd-0546f0a769e8" />
+  </component>
+</project>
